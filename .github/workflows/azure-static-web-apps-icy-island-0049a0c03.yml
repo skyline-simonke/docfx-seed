@@ -12,16 +12,26 @@ on:
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     name: Build and Deploy Job
     steps:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - name: Build Documentation
-        uses: nikeee/docfx-action@v1.0.0
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
         with:
-          args: docfx.json
+          dotnet-version: 3.1.101
+      - name: Setup DocFX
+        uses: crazy-max/ghaction-chocolatey@v1
+        with:
+          args: install docfx
+      - name: Install dependencies
+        run: dotnet restore
+      - name: DocFX Build
+        working-directory: docs
+        run: docfx docfx.json
+        continue-on-error: false
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
@@ -38,7 +48,7 @@ jobs:
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     name: Close Pull Request Job
     steps:
       - name: Close Pull Request
