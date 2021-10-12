@@ -37,3 +37,10 @@
     "xrefService": [ "https://xref.docs.microsoft.com/query?uid={uid}" ]
   }
 }
+{
+    "template": [
+        "default",
+        "templates/material"
+    ],
+}
+
