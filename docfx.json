@@ -27,6 +27,14 @@
         "files": [ "articles/images/**"]
       }
     ],
+
+    
+      "template": [
+          "default",
+          "templates/material"
+      ],
+    
+
     "overwrite": "specs/*.md",
     "globalMetadata": {
       "_appTitle": "docfx seed website",
@@ -36,11 +44,5 @@
     "dest": "_site",
     "xrefService": [ "https://xref.docs.microsoft.com/query?uid={uid}" ]
   }
-}
-{
-    "template": [
-        "default",
-        "templates/material"
-    ],
 }
 
